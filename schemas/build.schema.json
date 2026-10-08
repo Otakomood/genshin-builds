@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Otakomood/genshin-builds/blob/main/schemas/build.schema.json",
+
+  "title": "Genshin Impact Build",
+  "description": "Compact and structured Genshin Impact build data based on trusted sources such as KeqingMains.",
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "required": [
+    "character_id",
+    "build_id",
+    "name"
+  ],
+
+  "properties": {
+
+    "character_id": {
+      "type": "string",
+      "description": "Unique character ID."
+    },
+
+    "build_id": {
+      "type": "string",
+      "description": "Unique ID for this build or playstyle."
+    },
+
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the build or playstyle."
+    },
+
+    "description": {
+      "type": "string",
+      "description": "Short practical description of the build."
+    },
+
+    "artifacts": {
+      "$ref": "#/$defs/artifacts"
+    },
+
+    "weapons": {
+      "type": "array",
+      "description": "Recommended weapons ordered by priority.",
+      "items": {
+        "$ref": "#/$defs/weapon"
+      }
+    },
+
+    "teams": {
+      "type": "array",
+      "description": "Recommended example teams.",
+      "items": {
+        "$ref": "#/$defs/team"
+      }
+    },
+
+    "combos": {
+      "type": "array",
+      "description": "Important character combos when applicable.",
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "notes": {
+      "type": "array",
+      "description": "Short practical notes that do not fit elsewhere.",
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "source": {
+      "$ref": "#/$defs/source"
+    }
+  },
+
+  "$defs": {
+
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "properties": {
+
+        "er": {
+          "type": "string",
+          "description": "Recommended Energy Recharge range or requirement."
+        },
+
+        "main_stats": {
+          "type": "object",
+          "additionalProperties": false,
+
+          "properties": {
+
+            "sands": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "goblet": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "circlet": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+
+        "sub_stats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "sets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact_set"
+          }
+        }
+      }
+    },
+
+    "artifact_set": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "id",
+        "pieces"
+      ],
+
+      "properties": {
+
+        "id": {
+          "type": "string",
+          "description": "Artifact set ID."
+        },
+
+        "pieces": {
+          "type": "integer",
+          "enum": [
+            2,
+            4
+          ]
+        },
+
+        "priority": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Lower number means higher priority."
+        },
+
+        "note": {
+          "type": "string",
+          "description": "Short explanation of when to use the set."
+        }
+      }
+    },
+
+    "weapon": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "id"
+      ],
+
+      "properties": {
+
+        "id": {
+          "type": "string",
+          "description": "Weapon ID."
+        },
+
+        "priority": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Lower number means higher priority."
+        },
+
+        "note": {
+          "type": "string",
+          "description": "Short practical explanation of when to use the weapon."
+        }
+      }
+    },
+
+    "team": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "type",
+        "characters"
+      ],
+
+      "properties": {
+
+        "type": {
+          "type": "string",
+          "description": "Team archetype or reaction type."
+        },
+
+        "characters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "rotation": {
+          "type": "string",
+          "description": "Optional sample rotation."
+        },
+
+        "note": {
+          "type": "string",
+          "description": "Optional short explanation of the team."
+        }
+      }
+    },
+
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "name",
+        "url"
+      ],
+
+      "properties": {
+
+        "name": {
+          "type": "string"
+        },
+
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+
+        "version": {
+          "type": "string",
+          "description": "Game or guide version used for the data."
+        },
+
+        "updated_at": {
+          "type": "string",
+          "description": "Date when the source was last checked."
+        }
+      }
+    }
+  }
+}
