@@ -21,6 +21,11 @@
       "description": "Unique character ID."
     },
 
+    "playstyle": {
+      "type": "string",
+      "description": "Character playstyle as defined by KeqingMains."
+    },
+
     "build_id": {
       "type": "string",
       "description": "Unique ID for this build or playstyle."
